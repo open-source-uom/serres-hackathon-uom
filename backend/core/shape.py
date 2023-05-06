@@ -23,17 +23,18 @@ class Shape():
     ]
     )
 
-    shape_to_coords_dict = {"F": np.array([[0, 0],[0, -1],[1, -1],[0, 1],[-1, 0]]),
-        "I": np.array([[0, 0], [0, -1], [0, -2], [0, 1], [0, 2]]),
-        "N": np.array([[0, 0],[-1, 0],[-1, 1],[0, -1],[0, -2]]),
-        "P": np.array([[0, 0],[0, -1],[1, -1],[1, 0],[0, 1]]),
-        "T": np.array([[0, 0],[1, 0],[-1, 0],[0, 1],[0, 2]]),
-        "U": np.array([[0, 0],[-1, 0],[1, 0],[1, -1],[-1, -1]]),
-        "V": np.array([[0, 0],[0, -1],[0, -2],[-1, 0],[-2, 0]]),
-        "W": np.array([[0, 0],[-1, 0],[-1, -1],[0, 1],[1, 1]]),
-        "X": np.array([[0, 0],[1, 0],[-1, 0],[0, 1],[0, -1]]),
-        "Y": np.array([[0, 0],[-1, 0],[0, -1],[0, 1],[0, 2]]),
-        "Z": np.array([[0, 0],[0, -1],[-1, -1],[0, 1],[1, 1]])
+    shape_to_coords_dict = {"F": np.array([(0, 0), (0, -1), (1, -1), (0, 1), (-1, 0)]),
+                            "I": np.array([(0, 0), (0, -1), (0, -2), (0, 1), (0, 2)]),
+                            "N": np.array([(0, 0), (-1, 0), (-1, 1), (0, -1), (0, -2)]),
+                            "P": np.array([(0, 0), (0, -1), (1, -1), (1, 0), (0, 1)]),
+                            "T": np.array([(0, 0), (1, 0), (-1, 0), (0, 1), (0, 2)]),
+                            "U": np.array([(0, 0), (-1, 0), (1, 0), (1, -1), (-1, -1)]),
+                            "V": np.array([(0, 0), (0, -1), (0, -2), (-1, 0), (-2, 0)]),
+                            "W": np.array([(0, 0), (-1, 0), (-1, -1), (0, 1), (1, 1)]),
+                            "X": np.array([(0, 0), (1, 0), (-1, 0), (0, 1), (0, -1)]),
+                            "Y": np.array([(0, 0), (-1, 0), (0, -1), (0, 1), (0, 2)]),
+                            "Z": np.array([(0, 0), (0, -1), (-1, -1), [0, 1], (1, 1)]),
+                            "S": np.array([(0, 0)])
     }
     def __init__(self,letter:str):
         if letter not in self.shape_to_coords_dict: raise ValueError
@@ -51,21 +52,24 @@ class Shape():
         return rotated_matrix
     def rotate_shape(self,r:int):
         rotated_matrix = []
+        temp_matrix = []
         if r==0:
-            self.nodes = self.shape_to_coords_dict[self.value]
+            temp_matrix = self.shape_to_coords_dict[self.value]
         elif r==1:
-            self.nodes = self.rotate_basic_shape(self.shape_to_coords_dict[self.value], 0)
+            temp_matrix = self.rotate_basic_shape(self.shape_to_coords_dict[self.value], 0)
         elif r==2:
-            self.nodes = self.rotate_basic_shape(self.shape_to_coords_dict[self.value], 0)
-            self.nodes = self.rotate_basic_shape(self.nodes, 0)
+            temp_matrix = self.rotate_basic_shape(self.shape_to_coords_dict[self.value], 0)
+            temp_matrix = self.rotate_basic_shape(temp_matrix, 0)
         elif r==3:
-            self.nodes = self.rotate_basic_shape(self.shape_to_coords_dict[self.value], 0)
-            self.nodes = self.rotate_basic_shape(self.nodes, 0)
-            self.nodes = self.rotate_basic_shape(self.nodes, 0)
+            temp_matrix = self.rotate_basic_shape(self.shape_to_coords_dict[self.value], 0)
+            temp_matrix = self.rotate_basic_shape(temp_matrix, 0)
+            temp_matrix = self.rotate_basic_shape(temp_matrix, 0)
         elif r==4:
-            self.nodes = self.rotate_basic_shape(self.shape_to_coords_dict[self.value], 1)
+            temp_matrix = self.rotate_basic_shape(self.shape_to_coords_dict[self.value], 1)
         elif r==5:
-            self.nodes = self.rotate_basic_shape(self.shape_to_coords_dict[self.value], 2)
+            temp_matrix = self.rotate_basic_shape(self.shape_to_coords_dict[self.value], 2)
+        for i in range(len(self.nodes)):
+            self.nodes[i].set_coords(temp_matrix[i])
         self.rotation_state = r
         self.nodes = np.array(self.nodes)
         self.change_cords_by_a_position(self.origin)

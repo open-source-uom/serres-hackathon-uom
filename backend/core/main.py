@@ -3,7 +3,21 @@ from node import Node
 from shape import Shape
 def main():
                     #  Y X
-    my_canvas = Canvas(10,11, [(3,4)])
+    my_canvas = Canvas(2,2, [(0,0)])
+
+    s1 = Shape('S')
+    s2 = Shape('S')
+    my_canvas.place_shape(s1,(1,1))
+    print(my_canvas.get_matrix())
+    print(my_canvas.get_all_available_positions(s2))
+    #print(my_canvas.count_filled_cells())
+    #print(my_canvas.get_all_available_positions())
+
+    #s1.rotate_shape(1)
+    # print(my_canvas.get_all_non_available_positions(s1))
+    # my_canvas.place_shape(s1,(1,0))
+    # print(my_canvas.get_matrix())
+
     # # man = manipullator()
     # # result1 = my_canvas.count_filled_cells()
     # # #print("Filled Cells" ,result1)
@@ -11,7 +25,7 @@ def main():
     # # #print("Empty Cells",result2)
     # # result3 = my_canvas.count_holes()
     # # #print("Hole Cells",result3)
-    s1 = Shape('F')
+    #s1 = Shape('F')
     # s2 = Shape('N')
     # # s3 = Shape('T')
     #
@@ -25,10 +39,10 @@ def main():
     # #Shape.change_cords_by_a_position(s1,pos)
     # #print(s1.get_coords_list())
     #
-    print(my_canvas.check_for_out_of_bounds_when_placed_in(s1,pos1))                                    # Y X
-    my_canvas.place_shape(s1,pos1)
-    # my_canvas.place_shape(s2, pos2)
-    print(my_canvas.get_matrix())
+    # print(my_canvas.check_for_out_of_bounds_when_placed_in(s1,pos1))                                    # Y X
+    # my_canvas.place_shape(s1,pos1)
+    # # my_canvas.place_shape(s2, pos2)
+    # print(my_canvas.get_matrix())
     # n = Node((1,2),"F")
     # print(n.get_coords())
     # n.set_coords((3,4))

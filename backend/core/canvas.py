@@ -84,7 +84,7 @@ class Canvas():
         for hole in self.holes:
             hole_x,hole_y = hole
             matrix[hole_x][hole_y] = self.hole_cell_char
-        return matrix
+        return np.rot90(matrix)
 
     def __str__(self):
         my_string:str = ""
@@ -95,28 +95,78 @@ class Canvas():
             my_string += " "
         return my_string
 
+    def get_positions_it_will_be_on_pos(self,s:Shape, pos:Tuple[int,int])->List[Tuple[int,int]]:
+        potitions:List[Tuple[int, int]] = []
+        for i in s.get_coords_list():
+            x,y = i
+            potitions.append((pos[0]-x,pos[1]-y))
+        return potitions
 
-
-    def count_empty_cells(self) -> int:
+    def count_filled_cells(self) -> int: #not hole or shape
         the_sum = 0
-        for row in self.get_matrix():
-            for elem in row:
-                if elem == self.empty_cell_char:
-                #    print(elem)
-                    the_sum += 1
+        for i in self.shapes_placed:
+            the_sum += len(i.get_coords_list())
 
-        return the_sum
+        return (the_sum + len(self.holes))
 
-    def count_filled_cells(self) -> int:
-        # the_sum = 0
-        # for row in self.matrix:
-        #     for elem in row:
-        #         if elem != self.empty_cell_char and elem != self.hole_cell_char:
-        #             #print(elem)
-        #             the_sum += 1
+    def get_all_available_positions(self,s:Shape)->List[Tuple[int,int]]:
+        matrix_set = set()
+        for row in range(self.dimensions[0]):
+            for col in range(self.dimensions[1]):
+                matrix_set.add((row, col))
+        return matrix_set.difference(set(self.get_all_non_available_positions(s)))
 
-        #return the_sum
-        pass
+    def get_all_non_available_positions(self,s:Shape)->List[Tuple[int,int]]:
+        positions_filled:List[Tuple[int,int]] = []
+        for shape in self.shapes_placed:
+            for i in shape.get_coords_list():
+                positions_filled.append(i)
+        for hole in self.holes:
+            positions_filled.append(hole)
+        positions_filled = list(set(positions_filled))
+
+        positions:List[Tuple[int,int]] = []
+        for pos in positions_filled:
+            positions += self.get_positions_it_will_be_on_pos(s,pos)
+
+        coords = s.get_coords_list()
+        all_x = list(map(lambda coord: coord[0], coords))
+        all_x_sorted = sorted(all_x)
+        # print(all_x_sorted)
+        all_y = list(map(lambda coord: coord[1], coords))
+        all_y_sorted = sorted(all_y)
+        #print("all_x_sorted",all_x_sorted)
+        min_x = all_x_sorted[0]
+        min_y = all_y_sorted[0]
+
+        max_x = all_x_sorted[len(all_x_sorted) - 1]
+        max_y = all_y_sorted[len(all_y_sorted) - 1]
+        # print("min_x",min_x)
+        # print("max_x",max_x)
+        # print("min_y",min_y)
+        # print("max_y",max_y)
+        # print("coords",coords)
+        # print("dimensionY",self.dimensions[1])
+        # print("dimensionX",self.dimensions[0])
+        # everything is signed so just add it
+        for i in range(self.dimensions[0]):
+            for j in range(max_y):
+                positions.append((i,self.dimensions[1]-j-1))
+            for j in range(-min_y):
+                positions.append((i,j))
+
+        for i in range(self.dimensions[1]):
+            for j in range(max_x):
+                print(self.dimensions[0]-j-1,i)
+                positions.append((self.dimensions[0]-j-1,i))
+            for j in range(-min_x):
+                positions.append((j,i))
+
+
+        return list(set(positions))
+
+
+
     def count_holes(self) -> int:
         return len(self.holes)
     def get_holes(self) -> List[Tuple[int,int]]:
@@ -160,4 +210,4 @@ def main():
     res2 = my_canvas.count_filled_cells()
     print(checking)
     print(res,res2)
-main();
+#main();
