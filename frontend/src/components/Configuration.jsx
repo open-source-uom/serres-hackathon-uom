@@ -28,6 +28,7 @@ const Configuration = () => {
         <div>
             <h3>Configuration</h3>
             <button onClick={handleSave}>Save Configuration</button>
+            <br />
             <label>
                 Load Configuration:{' '}
                 <input type="file" accept="application/json" onChange={handleLoad} />
