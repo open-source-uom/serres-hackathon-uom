@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import Canvas from './components/Canvas';
 import LetterSelection from './components/LetterSelection';
 import Rotate from './components/Rotate';
-import Shape from './components/Shape';
 import Configuration from './components/Configuration';
 import Timer from './components/Timer';
-import ColorizedCanvas from './components/ColorizedCanvas';
-import UniqueSolutions from './components/UniqueSolutions';
 import Results from './components/Results';
 import useStore from "./store/store.js";
 import InputDimensions from './components/InputDimensions';
+import useFetchSolution from "./hooks/useFetchSolution.js";
 
 const dummy_colorized = [
             [
@@ -45,7 +43,6 @@ const dummy_colorized = [
 
 
 const App = () => {
-    
     const [rotateShapes, setRotateShapes] = useState(false);
     const [flipShapes, setFlipShapes] = useState(false);
     const [configuration, setConfiguration] = useState('');
@@ -54,9 +51,35 @@ const App = () => {
     const [results, setResults] = useState([]);
     const rows = useStore(state=>state.rows)
     const columns = useStore(state=>state.columns)
+    const getRows = useStore(state=>state.getRows)
+    const getColumns = useStore(state=>state.getColumns)
+    const getLettersSelected = useStore(state=>state.getLettersSelected)
+    const getIsRotated = useStore(state=>state.getIsRotated)
+    const getPositions = useStore(state=>state.getPositions)
+    const [shouldSolve, setShouldSolve] = useState(false);
+    const dataToSend  =
+        {
+            rows: getRows(),
+            columns: getColumns(),
+            positions: getPositions(),
+            lettersSelected: getLettersSelected(),
+            isRotated: getIsRotated()
+        };
+    const { data, isLoading, error } = useFetchSolution(dataToSend,shouldSolve);
+    const setCanvas = useStore(state=>state.setCanvas)
 
+    if(data != null){
+        console.log("MYYY DATA IS: ", data);
+        const arr = Array.from(data.replace(/ /g, ''));
+        const canvasObjects = arr.map((letter)=>({letter:letter,color:"green"}))
+        console.log(canvasObjects)
+    //     FFTT
+    }
+
+    console.log("THE DATA IS ", data);
     const handleSolveClick = () => {
         // Perform solver logic here and update state with results
+        setShouldSolve(true);
         const dummyResults = [
             [
                 {
@@ -88,6 +111,7 @@ const App = () => {
                 },
             ],
         ];
+
         setResults(dummyResults);
     }
 
@@ -98,6 +122,7 @@ const App = () => {
                 <InputDimensions />
                 <div style={{width:"600px",height:"2px",backgroundColor:"green",margin:"1rem"}}></div>
                 {/* <Cell value={cells} onChange={setCells} /> */}
+                {}
                 <Canvas
                     width={rows}
                     height={rows}
@@ -113,6 +138,12 @@ const App = () => {
                 <Timer time={elapsedTime} />
                 <button onClick={handleSolveClick}>Solve</button>
                 <Results results={results} />
+                {isLoading && <div>Loading...</div>}
+                {data && <div>
+                    <div>Unique Solution: {data}</div>
+                </div>}
+                {/*{data && setShouldSolve(false)}*/}
+                {error && <div>Error: {error}</div>}
             </div>
         </div>
     );

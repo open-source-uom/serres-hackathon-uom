@@ -5,9 +5,11 @@ import CanvasCell from './CanvasCell';
 const Canvas = () => {
     const rows = useStore(state=>state.rows)
     const columns = useStore(state=>state.columns)
-    // console.log(rows,columns,canvasArr)
+
     const canvasArr = useStore(state=> state.canvas)
     const setCanvas = useStore(state=>state.setCanvas)
+
+    console.log("RENDERED CANVAS",canvasArr)
 
 
 

@@ -9,6 +9,7 @@ const useStore = create()(set => ({
     canvas: [],
     lettersSelected: [],
     isRotated: false,
+    isFetched: false,
     //xreiazetai allagh
     config: {
         rows: 10,
@@ -25,7 +26,7 @@ const useStore = create()(set => ({
     // αυτό θα χρειαστεί να αλλάξει
     setColumns: (the_columns) => set((state) =>
 
-        ({ ...state, columns: the_columns, canvas: Array(state.rows * state.columns).fill({ letter: "Α", color: "grey" }) })),
+        ({ ...state, columns: the_columns, canvas: Array(state.rows * state.columns).fill({ letter: "B", color: "grey" }) })),
     setPixels: (the_pixels) => set((state) => ({ ...state, pixels: the_pixels })),
     setCanvas: (arr) => set(state => { return { canvas: arr, ...state } }),
     setSelectedLetters: (arr) => set(state => {
@@ -44,6 +45,9 @@ const useStore = create()(set => ({
     }),
     setPositions: (positions) => set(state => {
         return { positions: positions, ...state }
+    }),
+    setIsFetched: (isFetched) => set(state => {
+        return { isFetched: isFetched, ...state }
     }),
     getRows: () => {
         return useStore.getState().rows
