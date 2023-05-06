@@ -10,7 +10,7 @@ def measure_time(func: Callable[..., Any], *args: Tuple[Any], **kwargs: Any) -> 
     result = func(*args, **kwargs)
     end_time = time.time()
     running_time = end_time - start_time
-    print(f"Function {func.__name__} took {running_time:.6f} seconds to run.")
+    #print(f"Function {func.__name__} took {running_time:.6f} seconds to run.")
     return result
 
 # 10] Create a program that finds each and every (unique) way to fill a Canvas (with or without black cells)
@@ -51,6 +51,8 @@ class Shape():
         # calculate sinΘ cosΘ
         # this will change the coords (while maintaining the same origin ig)
         pass
+    def change_cords_by_a_position(self,position:Tuple[int,int]):
+        self.coords = self.coords + position
 
 
 
@@ -64,19 +66,23 @@ class CongruentGroup:
 
 def main():
                     #  Y X
-    my_canvas = Canvas(6,5)
+    my_canvas = Canvas(6,5, [])
     result1 = my_canvas.count_filled_cells()
-    print("Filled Cells" ,result1)
+    #print("Filled Cells" ,result1)
     result2 = my_canvas.count_empty_cells()
-    print("Empty Cells",result2)
+    #print("Empty Cells",result2)
     result3 = my_canvas.count_holes()
-    print("Hole Cells",result3)
+    #print("Hole Cells",result3)
     s1 = Shape('F')
     # s2 = Shape('L')
     # s3 = Shape('T')
 
-                                    # Y X
-    my_canvas.place_shape_checked(s1,(2,3))
+    pos = (1,1)
+    Shape.change_cords_by_a_position(s1,pos)
+    #print(s1.get_coords_list())
+
+    #print(my_canvas.check_for_out_of_bounds_when_placed_in(s1,pos))                                    # Y X
+    #my_canvas.place_shape_checked(s1,pos)
 
 
 class Canvas():
@@ -85,28 +91,25 @@ class Canvas():
     hole_cell_char = 'B'
 
     # to megethos den mas apasxolei sto backend
-    def __init__(self,lines:int,rows:int):
+    def __init__(self,lines:int,rows:int, holes:List[Tuple[int, int]]):#y:lines,x:rows
 
         self.shapes_placed:List[Shape] = []
+        self.holes: List[Tuple[int, int]] = holes
         enough_empty_cells = [self.empty_cell_char for i in range(lines*rows)]
         # den einai swsto auto
         # self.matrix = np.arange(lines * rows).reshape(lines,rows)
         self.matrix = np.full((lines,rows),self.empty_cell_char)
-        print("MATRIX OF:",self.matrix)
+        #print("MATRIX OF:",self.matrix)
 
     def check_for_stepping_in_hole_when_placed_in(self,s:Shape,position:Tuple[int,int]):
         position_x, position_y = position
         pass
-    def check_for_out_of_bounds_when_placed_in(self,s:Shape,position:Tuple[int,int]):
-        pass
-    def place_shape_unchecked(self,s:Shape,position:Tuple[int,int]):
-        pass
-    def place_shape_checked(self,s:Shape,position:Tuple[int,int]):
+    def check_for_out_of_bounds_when_placed_in(self,s:Shape,position:Tuple[int,int])->bool:
         position_x,position_y = position
         coords = s.get_coords_list()
         all_x = list(map(lambda coord: coord[0], coords))
         all_x_sorted = sorted(all_x)
-        print(all_x_sorted)
+        #print(all_x_sorted)
         all_y = list(map(lambda coord: coord[1], coords))
         all_y_sorted = sorted(all_y)
 
@@ -119,23 +122,31 @@ class Canvas():
         # everything is signed so just add it
         max_position_x = position_x + max_x
         max_position_y = position_y + max_y
+
         min_position_x = position_x + min_x
         min_position_y = position_y + min_y
-        # MPOREI NA XREIAZETAI ISOTHTA ME 0
-        if(min_position_y < 0  or min_position_x < 0):
-            raise ValueError("Shape cannot be placed(rows)")
-        rows,cols = self.matrix.shape
-        if(max_position_y > rows or max_position_x > cols):
-            raise ValueError("Shape cannot be placed(cols)")
+
+        if min_position_y< 0 or min_position_x < 0 or max_position_x > self.matrix.shape[0] -1 or max_position_y > self.matrix.shape[1] - 1:
+            return False
+        return True
+
+    def place_shape_unchecked(self,s:Shape,position:Tuple[int,int]):
+        pass
+    def place_shape(self,s:Shape,position:Tuple[int,int]):
+        position_x,position_y = position
+        coords = s.get_coords_list()
+        self.shaps_placed.append(s)
+        s.change_cords_by_a_position(position)
+
         #draw the board appropriately
         for coord_tuple in coords:
             # position_y,position_x to origin kai thelw na efarmosw ta transforms
-            print(coord_tuple)
+        #    print(coord_tuple)
             x,y = coord_tuple
 
             place_in_x = position_x + x
             place_in_y = position_y + y
-            print("Placement",place_in_x,place_in_y)
+            #print("Placement",place_in_x,place_in_y)
             self.matrix[place_in_x][place_in_y] = s.value
         print(self.matrix)
     def draw_shape_in(self,s:Shape,position:Tuple[int,int]):
@@ -154,7 +165,7 @@ class Canvas():
         for row in self.matrix:
             for elem in row:
                 if elem == self.empty_cell_char:
-                    print(elem)
+                #    print(elem)
                     the_sum += 1
 
         return the_sum
@@ -163,7 +174,7 @@ class Canvas():
         for row in self.matrix:
             for elem in row:
                 if elem != self.empty_cell_char and elem != self.hole_cell_char:
-                    print(elem)
+                    #print(elem)
                     the_sum += 1
 
         return the_sum
@@ -172,7 +183,7 @@ class Canvas():
         for row in self.matrix:
             for elem in row:
                 if elem == self.hole_cell_char:
-                    print(elem)
+                    #print(elem)
                     the_sum += 1
 
         return the_sum
@@ -184,7 +195,7 @@ class Canvas():
             for col_index in range(cols):
                 elem = self.matrix[row_index][col_index]
                 if elem == self.hole_cell_char:
-                    print(elem)
+                    #print(elem)
                     holes.append((row_index,col_index))
 
 
@@ -208,5 +219,30 @@ class Canvas():
         # !!! there will be a problem with defining its origin
         # we might just make it a different Class
         pass
+
+class manipullator():
+    #a matrix that contains the rotation matrixes, 1:flip vertically, 2:flip horizontaly
+    rotation_matrixes = np.array([
+        [
+            [0, -1], #0:90 clockwise rotation
+            [1, 0]
+        ],
+        [
+            [1, 0], #1:flip vertically
+            [0, -1]
+        ],
+        [
+            [-1, 0], #2:flip horizontaly
+            [0, 1]
+        ]
+    ]
+    )
+    def rotate_shape(self, shape: Shape, rotation: int):
+        rotated_matrix = []
+        for i in shape.get_coords_list():
+            rotated_matrix.append(np.dot(i, self.rotation_matrixes[rotation]))
+
+        return rotated_matrix
+
 
 main()
