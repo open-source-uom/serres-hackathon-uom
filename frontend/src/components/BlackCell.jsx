@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Cell = ({ size }) => {
+const BlackCell = ({ size }) => {
     const style = {
         width: size,
         height: size,
-        border: '1px solid black',
+        backRoundColor: 'black',
     };
     return <div style={style}></div>;
 };
 
-export default Cell;
+export default BlackCell;
