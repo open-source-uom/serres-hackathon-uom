@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Cell from './components/Cell';
 import Canvas from './components/Canvas';
 import LetterSelection from './components/LetterSelection';
 import Rotate from './components/Rotate';
@@ -9,8 +8,8 @@ import Timer from './components/Timer';
 import ColorizedCanvas from './components/ColorizedCanvas';
 import UniqueSolutions from './components/UniqueSolutions';
 import Results from './components/Results';
+import useStore from "./store/store.js";
 import InputDimensions from './components/InputDimensions';
-import useStore from './store/store';
 
 const dummy_colorized = [
             [
@@ -53,10 +52,8 @@ const App = () => {
     const [elapsedTime, setElapsedTime] = useState(0);
     const [uniqueSolutions, setUniqueSolutions] = useState(0);
     const [results, setResults] = useState([]);
-
-
     const rows = useStore(state=>state.rows)
-const columns = useStore(state=>state.columns)
+    const columns = useStore(state=>state.columns)
 
     const handleSolveClick = () => {
         // Perform solver logic here and update state with results

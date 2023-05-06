@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
+import useStore from "../store/store.js";
 
 const Rotate = () => {
-    const [isRotated, setIsRotated] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+    const isRotated = useStore(state => state.isRotated);
+    const setIsRotated = useStore(state => state.setIsRotated);
 
     const handleToggle = () => {
-        setIsRotated((prev) => !prev);
+        setIsChecked(!isChecked);
+        setIsRotated(isChecked);
+        console.log("isRotated: ", isRotated);
     };
 
     return (
         <div>
             <label>
                 Rotate shapes:{' '}
-                <input type="checkbox" checked={isRotated} onChange={handleToggle} />
+                <input type="checkbox" checked={isChecked} onChange={handleToggle} />
             </label>
         </div>
     );

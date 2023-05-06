@@ -1,6 +1,9 @@
 import React from 'react';
 
-const Cell = ({ size }) => {
+const Cell = () => {
+    const size = useStore(state=>state.size)
+
+
     const style = {
         width: size,
         height: size,

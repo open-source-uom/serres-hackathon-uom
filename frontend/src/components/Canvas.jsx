@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Cell from './Cell';
 import useStore from '../store/store';
 import CanvasCell from './CanvasCell';
 
@@ -8,11 +7,14 @@ const Canvas = () => {
     const columns = useStore(state=>state.columns)
     // console.log(rows,columns,canvasArr)
     const canvasArr = useStore(state=> state.canvas)
-    
+    const setCanvas = useStore(state=>state.setCanvas)
+
+
+
     const [holes, setHoles] = useState([]);
 
-    const maxHeight = 500
-    const maxWidth = 750
+        const maxHeight = 500
+        const maxWidth = 750
     const style = {
         display: 'grid',
         gridAutoColumns:"max-content",
@@ -24,22 +26,14 @@ const Canvas = () => {
         maxWidth:maxWidth
     };
 
-    const handleClick = (x, y) => {
-        setHoles((prevHoles) => [...prevHoles, { x, y }]);
-    };
-
-
     const handleCanvasChange = (index,letter,color) => {
-        useStore.setState((state)=>{
-            const newCanvas = [...state.canvas]
+        setCanvas((prevCanvas) => {
+            let newCanvas = [...prevCanvas]
             newCanvas[index] = {letter,color}
-            return {canvas:newCanvas}
-        })
+            return newCanvas
+        });
     };
 
-    for(let i = 0; i < rows; i++){
-
-    }
     // Create a 2D array of cells
     // const cells = [];
     
@@ -52,7 +46,6 @@ const Canvas = () => {
             
             <div style={style}>
                 {canvasArr.map((obj,pos)=><CanvasCell key={pos} index={pos} {...obj} size="20" onChange={handleCanvasChange} />)}
-        
             </div>
         </div>
     );

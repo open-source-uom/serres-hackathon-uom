@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
+import useStore from "../store/store";
 
 const Configuration = () => {
-    const [config, setConfig] = useState(null);
+    const [config, setConfig] = useStore(state=>[state.config, state.setConfig])
+    const getRows = useStore(state=>state.getRows)
+    const getColumns = useStore(state=>state.getColumns)
+    const getLettersSelected = useStore(state=>state.getLettersSelected)
+    const getIsRotated = useStore(state=>state.getIsRotated)
+    const getPositions = useStore(state=>state.getPositions)
 
     const handleSave = () => {
-        const json = JSON.stringify(config);
+        const json = JSON.stringify(
+            {
+                rows: getRows(),
+                columns: getColumns(),
+                positions: getPositions(),
+                lettersSelected: getLettersSelected(),
+                isRotated: getIsRotated()
+            }
+        );
         const blob = new Blob([json], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -33,7 +47,6 @@ const Configuration = () => {
                 Load Configuration:{' '}
                 <input type="file" accept="application/json" onChange={handleLoad} />
             </label>
-            <pre>{config && JSON.stringify(config, null, 2)}</pre>
         </div>
     );
 };

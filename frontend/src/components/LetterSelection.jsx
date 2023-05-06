@@ -4,7 +4,6 @@ import useStore from "../store/store";
 function LetterSelection() {
   const lettersSelected = useStore((state) => state.lettersSelected);
   const setSelectedLetters = useStore((state) => state.setSelectedLetters);
-  const addLetter = useStore((state) => state.addLetter);
   const letters = ["F", "I", "L", "N", "P", "T", "U", "V", "W", "X", "Y", "Z"];
 
   const letterColors = {
@@ -24,10 +23,14 @@ function LetterSelection() {
   console.log(lettersSelected)
 
   const handleLetterClick = (letter) => {
-    addLetter(letter);
-    // setSelectedLetters([...lettersSelected, letter]);
+    lettersSelected.push(letter)
+    setSelectedLetters([...lettersSelected, letter]);
   };
 
+  const handleSelectAll = () => {
+    lettersSelected.push(...letters)
+    setSelectedLetters([...lettersSelected, ...letters]);
+  }
 
   return (
     <div>
@@ -42,6 +45,7 @@ function LetterSelection() {
           {letter}
         </span>
       ))}
+      <button onClick={handleSelectAll}>Select All</button>
     </div>
   );
 }
