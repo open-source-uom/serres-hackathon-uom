@@ -8,6 +8,7 @@ import Results from './components/Results';
 import useStore from "./store/store.js";
 import InputDimensions from './components/InputDimensions';
 import useFetchSolution from "./hooks/useFetchSolution.js";
+import ColorizedCanvas from "./components/ColorizedCanvas.jsx";
 
 const dummy_colorized = [
             [
@@ -73,7 +74,7 @@ const App = () => {
         const arr = Array.from(data.replace(/ /g, ''));
         const canvasObjects = arr.map((letter)=>({letter:letter,color:"green"}))
         console.log(canvasObjects)
-    //     FFTT
+
     }
 
     console.log("THE DATA IS ", data);
@@ -140,9 +141,9 @@ const App = () => {
                 <Results results={results} />
                 {isLoading && <div>Loading...</div>}
                 {data && <div>
+                    <ColorizedCanvas solution={data} rows={data.split(" ").length} columns={data.split(" ")[0].length} />
                     <div>Unique Solution: {data}</div>
                 </div>}
-                {/*{data && setShouldSolve(false)}*/}
                 {error && <div>Error: {error}</div>}
             </div>
         </div>

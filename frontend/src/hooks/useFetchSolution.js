@@ -50,8 +50,6 @@ const initializer = (initialState) => {
 
 function useFetchSolution(data,shouldFetch){
     const [state,dispatch] = useReducer(reducer,initialState,initializer)
-    // const isFetched = useStore(state => state.isFetched)
-    // const setIsFetched = useStore(state => state.setIsFetched)
     useEffect(() => {
         let ignore = false;
         const fetchSolution = async () => {
@@ -71,10 +69,7 @@ function useFetchSolution(data,shouldFetch){
                         resolve("FFLLΙ YFFLΙ ΥFTLΙ ΥΥTLΙ ΥΤΤΤΙ")
                     }, 2000)
                 })
-                console.log("awaitVal", awaitVal)
-                console.log("FETCHARA")
                 dispatch({ type: 'FETCH_SUCCESS', payload: awaitVal });
-                console.log("STATE IS: ", state)
             }catch{
                 dispatch({ type: 'FETCH_ERROR', payload: error });
             }
@@ -86,7 +81,6 @@ function useFetchSolution(data,shouldFetch){
         return () => { ignore = true; };
 
     },[shouldFetch])
-    // setIsFetched(true)
     return state
 }
 
