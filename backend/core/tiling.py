@@ -20,23 +20,23 @@ def find_ways_to_fill_canvas():
 
 # Q2
 def generate_all_shapes():
-    available_tiles:List[str] = ["F","I","L","N","P","T","U","V","W","X","Y","Z"]
+    available_tiles:List[str] = ["F","I","N","P","T","U","V","W","X","Y","Z"]
     all_available_shapes:List[Shape] = list(map(lambda letter: Shape(letter),available_tiles))
 
 
 class Shape():
 
-    shape_to_coords_dict = {"F": np.array([0, 0],[0, -1],[1, -1],[0, 1],[-1, 0]),
-        "I": np.array([0, 0], [0, -1], [0, -2], [0, 1], [0, 2]),
-        "N": np.array([0, 0],[-1, 0],[-1, 1],[0, -1],[0, -2]),
-        "P": np.array([0, 0],[0, -1],[1, -1],[1, 0],[0, 1]),
-        "T": np.array([0, 0],[1, 0],[-1, 0],[0, 1],[0, 2]),
-        "U": np.array([0, 0],[-1, 0],[1, 0],[1, -1],[-1, -1]),
-        "V": np.array([0, 0],[0, -1],[0, -2],[-1, 0],[-2, 0]),
-        "W": np.array([0, 0],[-1, 0],[-1, -1],[0, 1],[1, 1]),
-        "X": np.array([0, 0],[1, 0],[-1, 0],[0, 1],[0, -1]),
-        "Y": np.array([0, 0],[-1, 0],[0, -1],[0, 1],[0, 2]),
-        "Z": np.array([0, 0],[0, -1],[-1, -1],[0, 1],[1, 1])
+    shape_to_coords_dict = {"F": np.array([[0, 0],[0, -1],[1, -1],[0, 1],[-1, 0]]),
+        "I": np.array([[0, 0], [0, -1], [0, -2], [0, 1], [0, 2]]),
+        "N": np.array([[0, 0],[-1, 0],[-1, 1],[0, -1],[0, -2]]),
+        "P": np.array([[0, 0],[0, -1],[1, -1],[1, 0],[0, 1]]),
+        "T": np.array([[0, 0],[1, 0],[-1, 0],[0, 1],[0, 2]]),
+        "U": np.array([[0, 0],[-1, 0],[1, 0],[1, -1],[-1, -1]]),
+        "V": np.array([[0, 0],[0, -1],[0, -2],[-1, 0],[-2, 0]]),
+        "W": np.array([[0, 0],[-1, 0],[-1, -1],[0, 1],[1, 1]]),
+        "X": np.array([[0, 0],[1, 0],[-1, 0],[0, 1],[0, -1]]),
+        "Y": np.array([[0, 0],[-1, 0],[0, -1],[0, 1],[0, 2]]),
+        "Z": np.array([[0, 0],[0, -1],[-1, -1],[0, 1],[1, 1]])
     }
     def __init__(self,letter:str):
         if letter not in self.shape_to_coords_dict: raise ValueError
@@ -44,7 +44,8 @@ class Shape():
         self.coords = self.shape_to_coords_dict[letter]
         self.origin: Tuple[int, int] = 0, 0
         pass
-
+    def get_coords_list(self) -> List:
+        return list(self.coords.tolist())
     # mporei na einai kai degrees tha doume
     def rotate_shape(self,radians:float):
         # calculate sinΘ cosΘ
@@ -62,18 +63,26 @@ class CongruentGroup:
 
 
 def main():
-    my_canvas = Canvas(5,6)
+                    #  Y X
+    my_canvas = Canvas(6,5)
     result1 = my_canvas.count_filled_cells()
     print("Filled Cells" ,result1)
     result2 = my_canvas.count_empty_cells()
     print("Empty Cells",result2)
     result3 = my_canvas.count_holes()
     print("Hole Cells",result3)
+    s1 = Shape('F')
+    # s2 = Shape('L')
+    # s3 = Shape('T')
+
+                                    # Y X
+    my_canvas.place_shape_checked(s1,(2,3))
+
 
 class Canvas():
 
-    empty_cell_char = 'E'
-    hole_cell_char = 'H'
+    empty_cell_char = '-'
+    hole_cell_char = 'B'
 
     # to megethos den mas apasxolei sto backend
     def __init__(self,lines:int,rows:int):
@@ -82,20 +91,57 @@ class Canvas():
         enough_empty_cells = [self.empty_cell_char for i in range(lines*rows)]
         # den einai swsto auto
         # self.matrix = np.arange(lines * rows).reshape(lines,rows)
-        self.matrix = np.full((lines,rows),'E')
+        self.matrix = np.full((lines,rows),self.empty_cell_char)
         print("MATRIX OF:",self.matrix)
 
-
-
-
     def check_for_stepping_in_hole_when_placed_in(self,s:Shape,position:Tuple[int,int]):
+        position_x, position_y = position
         pass
     def check_for_out_of_bounds_when_placed_in(self,s:Shape,position:Tuple[int,int]):
         pass
     def place_shape_unchecked(self,s:Shape,position:Tuple[int,int]):
         pass
     def place_shape_checked(self,s:Shape,position:Tuple[int,int]):
-        pass
+        position_x,position_y = position
+        coords = s.get_coords_list()
+        all_x = list(map(lambda coord: coord[0], coords))
+        all_x_sorted = sorted(all_x)
+        print(all_x_sorted)
+        all_y = list(map(lambda coord: coord[1], coords))
+        all_y_sorted = sorted(all_y)
+
+        min_x = all_x_sorted[0]
+        min_y = all_y_sorted[0]
+
+        max_x = all_y_sorted[len(all_x_sorted)-1]
+        max_y = all_y_sorted[len(all_y_sorted)-1]
+
+        # everything is signed so just add it
+        max_position_x = position_x + max_x
+        max_position_y = position_y + max_y
+        min_position_x = position_x + min_x
+        min_position_y = position_y + min_y
+        # MPOREI NA XREIAZETAI ISOTHTA ME 0
+        if(min_position_y < 0  or min_position_x < 0):
+            raise ValueError("Shape cannot be placed(rows)")
+        rows,cols = self.matrix.shape
+        if(max_position_y > rows or max_position_x > cols):
+            raise ValueError("Shape cannot be placed(cols)")
+        #draw the board appropriately
+        for coord_tuple in coords:
+            # position_y,position_x to origin kai thelw na efarmosw ta transforms
+            print(coord_tuple)
+            x,y = coord_tuple
+
+            place_in_x = position_x + x
+            place_in_y = position_y + y
+            print("Placement",place_in_x,place_in_y)
+            self.matrix[place_in_x][place_in_y] = s.value
+        print(self.matrix)
+    def draw_shape_in(self,s:Shape,position:Tuple[int,int]):
+        position_x,position_y = position
+
+
     def __str__(self):
         my_string:str = ""
         for elem in self.matrix:
