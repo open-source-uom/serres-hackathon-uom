@@ -1,6 +1,6 @@
 import numpy as np
 
-class manipullator:
+class manipullator():
     #a matrix that contains the rotation matrixes, 1:flip vertically, 2:flip horizontaly
     rotation_matrixes = np.array([
         [
