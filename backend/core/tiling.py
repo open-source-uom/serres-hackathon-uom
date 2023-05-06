@@ -1,5 +1,9 @@
+import collections
+from functools import reduce
+
 import numpy as np
-from typing import List
+from typing import List, Tuple
+
 
 # shape_to_coords_dict = {"L":np.array(np.array()),"F":np.array(np.array()),
 #                         "I":np.array(np.array()),"N":np.array(np.array()),
@@ -26,6 +30,7 @@ class Shape():
     def __init__(self,letter:str):
         if(letter not in self.shape_to_coords_dict):raise ValueError
         self.coords = self.shape_to_coords_dict[letter]
+        self.origin:Tuple[int,int] = 0,0
         pass
 
     # mporei na einai kai degrees tha doume
@@ -44,31 +49,73 @@ class CongruentGroup:
     pass
 
 
+def main():
+    my_canvas = Canvas(5,6)
+    result1 = my_canvas.count_filled_cells()
+    print("Filled Cells" ,result1)
+    result2 = my_canvas.count_empty_cells()
+    print("Empty Cells",result2)
+    result3 = my_canvas.count_holes()
+    print("Hole Cells",result3)
 
 class Canvas():
+
+    empty_cell_char = 'E'
+    hole_cell_char = 'H'
 
     # to megethos den mas apasxolei sto backend
     def __init__(self,lines:int,rows:int):
         self.shapes_placed:List[Shape] = []
-        self.matrix = np.matrix(lines,rows)
+        enough_empty_cells = [self.empty_cell_char for i in range(lines*rows)]
+        # den einai swsto auto
+        # self.matrix = np.arange(lines * rows).reshape(lines,rows)
+        self.matrix = np.full((lines,rows),'E')
+        print("MATRIX OF:",self.matrix)
+
+
         pass
 
     def __str__(self):
         my_string:str = ""
+        for elem in self.matrix:
+            pass
 
 
-    def count_empty_cells(self) -> int :
-        pass
+
+    def count_empty_cells(self) -> int:
+        the_sum = 0
+        for row in self.matrix:
+            for elem in row:
+                if elem == self.empty_cell_char:
+                    print(elem)
+                    the_sum += 1
+
+        return the_sum
     def count_filled_cells(self) -> int:
-        pass
+        the_sum = 0
+        for row in self.matrix:
+            for elem in row:
+                if elem != self.empty_cell_char and elem != self.hole_cell_char:
+                    print(elem)
+                    the_sum += 1
+
+        return the_sum
     def count_holes(self) -> int:
+        the_sum = 0
+        for row in self.matrix:
+            for elem in row:
+                if elem == self.hole_cell_char:
+                    print(elem)
+                    the_sum += 1
+
+        return the_sum
         pass
-    def get_holes(self) -> List[(int,int)]:
+    def get_holes(self) -> List[Tuple[int,int]]:
         pass
     def calculate_parameter_of_shape(self,s1:Shape) -> int:
         pass
 
-    def get_empty_cells(self)->List[(int,int)] :
+    def get_empty_cells(self)->List[Tuple[int,int]]:
         pass
 
     def place_hole_in(self,x,y):
@@ -82,3 +129,5 @@ class Canvas():
         # !!! there will be a problem with defining its origin
         # we might just make it a different Class
         pass
+
+main()
