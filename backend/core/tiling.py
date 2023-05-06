@@ -25,73 +25,7 @@ def generate_all_shapes():
 
 
 class Shape():
-    # shapes = {
-    #     "F": np.array([0, 0],[0, -1],[1, -1],[0, 1],[-1, 0]),
-    #     "I": np.array([0, 0],[0, -1],[0, -2],[0, 1],[0, 2],),
-    #     "N": [
-    #         [0, 0],
-    #         [-1, 0],
-    #         [-1, 1],
-    #         [0, -1],
-    #         [0, -2],
-    #     ],
-    #     "P": [
-    #         [0, 0],
-    #         [0, -1],
-    #         [1, -1],
-    #         [1, 0],
-    #         [0, 1],
-    #     ],
-    #     "T": [
-    #         [0, 0],
-    #         [1, 0],
-    #         [-1, 0],
-    #         [0, 1],
-    #         [0, 2],
-    #     ],
-    #     "U": [
-    #         [0, 0],
-    #         [-1, 0],
-    #         [1, 0],
-    #         [1, -1],
-    #         [-1, -1],
-    #     ],
-    #     "V": [
-    #         [0, 0],
-    #         [0, -1],
-    #         [0, -2],
-    #         [-1, 0],
-    #         [-2, 0],
-    #     ],
-    #     "W": [
-    #         [0, 0],
-    #         [-1, 0],
-    #         [-1, -1],
-    #         [0, 1],
-    #         [1, 1],
-    #     ],
-    #     "X": [
-    #         [0, 0],
-    #         [1, 0],
-    #         [-1, 0],
-    #         [0, 1],
-    #         [0, -1],
-    #     ],
-    #     "Y": [
-    #         [0, 0],
-    #         [-1, 0],
-    #         [0, -1],
-    #         [0, 1],
-    #         [0, 2],
-    #     ],
-    #     "Z": [
-    #         [0, 0],
-    #         [0, -1],
-    #         [-1, -1],
-    #         [0, 1],
-    #         [1, 1],
-    #     ]
-    # }
+
     shape_to_coords_dict = {"F": np.array([0, 0],[0, -1],[1, -1],[0, 1],[-1, 0]),
         "I": np.array([0, 0], [0, -1], [0, -2], [0, 1], [0, 2]),
         "N": np.array([0, 0],[-1, 0],[-1, 1],[0, -1],[0, -2]),
@@ -152,8 +86,16 @@ class Canvas():
         print("MATRIX OF:",self.matrix)
 
 
-        pass
 
+
+    def check_for_stepping_in_hole_when_placed_in(self,s:Shape,position:Tuple[int,int]):
+        pass
+    def check_for_out_of_bounds_when_placed_in(self,s:Shape,position:Tuple[int,int]):
+        pass
+    def place_shape_unchecked(self,s:Shape,position:Tuple[int,int]):
+        pass
+    def place_shape_checked(self,s:Shape,position:Tuple[int,int]):
+        pass
     def __str__(self):
         my_string:str = ""
         for elem in self.matrix:
