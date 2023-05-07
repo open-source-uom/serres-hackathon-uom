@@ -4,15 +4,11 @@ from shape import Shape
 import copy
 def main():
                     #  Y X
-    my_canvas = Canvas(4,4, [])
+    my_canvas = Canvas(3,3, [])
 
     s1 = Shape('W')
-    for i in my_canvas.get_all_available_positions(s1):
-        print(i)
-        s1 = Shape('W')
-        c = copy.deepcopy(my_canvas)
-        c.place_shape(s1,i)
-        print(c.get_matrix())
+    my_canvas.place_shape(s1,(1,1))
+    print(my_canvas.get_sring_of_matrix())
     #print(my_canvas.count_filled_cells())
     #print(my_canvas.get_all_available_positions())
 

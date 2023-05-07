@@ -140,14 +140,7 @@ class Canvas():
 
         max_x = all_x_sorted[len(all_x_sorted) - 1]
         max_y = all_y_sorted[len(all_y_sorted) - 1]
-        # print("min_x",min_x)
-        # print("max_x",max_x)
-        # print("min_y",min_y)
-        # print("max_y",max_y)
-        # print("coords",coords)
-        # print("dimensionY",self.dimensions[1])
-        # print("dimensionX",self.dimensions[0])
-        # everything is signed so just add it
+
         for i in range(self.dimensions[0]):
             for j in range(max_y):
                 positions.append((i,self.dimensions[1]-j-1))
@@ -164,7 +157,14 @@ class Canvas():
 
         return list(set(positions))
 
-
+    def get_sring_of_matrix(self):
+        matrix = self.get_matrix()
+        my_string = ""
+        for i in matrix:
+            for j in i:
+                my_string += j
+            my_string += " "
+        return my_string
 
     def count_holes(self) -> int:
         return len(self.holes)

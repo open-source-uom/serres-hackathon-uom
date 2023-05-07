@@ -62,9 +62,5 @@ def run():
     for i in leafs:
         if i.shapes_remain == []:
             print(i.canvas.get_matrix(), "\n")
-    # node = NodeT(["T", "X"], Canvas(4, 4, []), True)
-    # children = node.generate_children()
-    # for c in children:
-    #     print(c.canvas.get_matrix(), "\n")
 
 run()
