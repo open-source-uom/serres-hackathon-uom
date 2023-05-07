@@ -26,6 +26,8 @@ def main():
     #print(my_canvas.count_filled_cells())
     #print(my_canvas.get_all_available_positions())
 
+    print(s1==s2)
+
     #s1.rotate_shape(1)
     # print(my_canvas.get_all_non_available_positions(s1))
     # my_canvas.place_shape(s1,(1,0))
