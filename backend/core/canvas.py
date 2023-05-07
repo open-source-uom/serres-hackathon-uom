@@ -107,6 +107,8 @@ class Canvas():
 
         return (the_sum + len(self.holes))
 
+    def count_empty_cells(self) -> int:
+        return (self.dimensions[0] * self.dimensions[1]) - self.count_filled_cells()
     def get_all_available_positions(self,s:Shape)->List[Tuple[int,int]]:
         matrix_set = set()
         for row in range(self.dimensions[0]):
@@ -156,7 +158,7 @@ class Canvas():
 
         return list(set(positions))
 
-    def get_sring_of_matrix(self):
+    def get_string_of_matrix(self):
         matrix = self.get_matrix()
         my_string = ""
         for i in matrix:
