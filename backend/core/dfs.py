@@ -34,8 +34,12 @@ class NodeT():
         self.rotation_allows = rotation_allows
         self.children = []
 
+    def get_canvas(self):
+        return self.canvas
+
     def generate_children(self) -> Tuple[Shape, Tuple[int, int]]:
         children: List[NodeT] = []
+        childres_placed_shapes = []
         for shape_symbol in self.shapes_remain:
             symbols_remain_instanse = copy.deepcopy(self.shapes_remain)
             symbols_remain_instanse.remove(shape_symbol)
@@ -51,9 +55,11 @@ class NodeT():
                 for position in self.canvas.get_all_available_positions(shape):
                     shape = Shape(shape_symbol)
                     shape.rotate_shape(rotation)
-                    newCanvas = copy.deepcopy(self.canvas)
+                    newCanvas = copy.deepcopy(self.get_canvas())
                     newCanvas.place_shape(shape, position)
-                    children.append(NodeT(symbols_remain_instanse, newCanvas, self.rotation_allows))
+                    node_instance = NodeT(symbols_remain_instanse, newCanvas, self.rotation_allows)
+                    children.append(node_instance)
+                    childres_placed_shapes.append(node_instance.get_canvas().get_placed_shapes())
         return children
 
 
