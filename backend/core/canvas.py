@@ -189,21 +189,50 @@ class Canvas():
     def calculate_parameter_of_shape(self,s1:Shape) -> int:
 
         total_sum = 0
-        all_coords = self.get_all_shapes_coords()
+        all_coords = self.get_all_shapes_coords().remove(s1.get_coords_list())
         for node in s1.nodes:
             this_sum = 0
             x,y = node.get_coords()
 
+            if x == 0:
+                this_sum +=1
+            if x == self.dimensions[0] - 1:
+                this_sum +=1
+            if y == 0:
+                this_sum +=1
+            if y == self.dimensions[1] - 1:
+                this_sum +=1
+
+
+
+            this_sum += 4 - this_sum
+
+            # check if it clashes with any of its own cells
+            for node2 in s1.nodes:
+                if node2.get_coords() == (x - 1, y):
+                    this_sum -= 1
+                if node2.get_coords() == (x + 1, y):
+                    this_sum -= 1
+                if node2.get_coords() == (x, y - 1):
+                    this_sum -= 1
+                if node2.get_coords() == (x, y + 1):
+                    this_sum -= 1
+
+
+
+            if all_coords is None:
+                total_sum += this_sum
+                continue
             for others_coords in all_coords:
                 if others_coords == (x - 1, y):
-                    this_sum += 1
+                    this_sum -= 1
                 if others_coords == (x + 1, y):
-                    this_sum += 1
+                    this_sum -= 1
                 if others_coords == (x, y - 1):
-                    this_sum += 1
+                    this_sum -= 1
                 if others_coords == (x, y + 1):
-                    this_sum += 1
-            this_sum += 4 - this_sum
+                    this_sum -= 1
+
             total_sum += this_sum
         return total_sum
     def get_empty_cells(self)->List[Tuple[int,int]]:

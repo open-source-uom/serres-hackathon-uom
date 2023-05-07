@@ -14,11 +14,14 @@ def measure_time(func: Callable[..., Any], *args: Tuple[Any], **kwargs: Any) -> 
 
 def main():
                     #  Y X
-    my_canvas = Canvas(3,3, [])
+    my_canvas = Canvas(6,6, [])
 
-    s1 = Shape('T')
+    s1 = Shape('P')
+    s2 = Shape("L")
     my_canvas.place_shape(s1,(1,1))
+    my_canvas.place_shape(s2,(2,1))
     # print(my_canvas.get_sring_of_matrix())
+    print(s1.get_coords_list())
     print(my_canvas.calculate_parameter_of_shape(s1))
     #print(my_canvas.count_filled_cells())
     #print(my_canvas.get_all_available_positions())
