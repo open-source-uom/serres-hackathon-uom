@@ -11,8 +11,6 @@ The Tile Factory 1981 Problem Solver is a Python program that solves the Tile Fa
 - [Background](#background)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Algorithm](#algorithm)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Background
@@ -33,8 +31,14 @@ To install the Tile Factory 1981 Problem Solver, simply clone the repository and
 
 ```
 git clone [https://github.com/your-username/tile-factory-1981.git](https://github.com/Open-Source-UoM/serres-hackathon-uom)
+```
+```
 cd serres-hackathon-uom
+```
+```
 npm install
+```
+```
 npm run dev
 ```
 
@@ -43,20 +47,21 @@ npm run dev
 To use the Tile Factory 1981 Problem Solver,
 simply use the Graphical User Interface(GUI) that will lunch on local host with the previous commands.
 
-```
+1.Select number of rows, columns and pixels(grid/array)
 
-## Algorithm
+2.Select holes(black) if any.
 
-The Tile Factory 1981 Problem Solver uses a dynamic programming algorithm to solve the problem. The algorithm works as follows:
+3.Choose letters(can choose rotated letters)
 
-- Define a state as a tuple (i, j, k), where i is the order number, j is the number of tiles produced so far, and k is a binary mask representing the machines used so far.
-- Define a function f(i, j, k) as the minimum number of machine hours needed to produce the i-th order, given that j tiles of the required sizes have already been produced, and the machines represented by the binary mask k have been used so far.
-- The base case is f(0, 0, 0) = 0.
-- For each state (i, j, k), compute f(i, j, k) as follows:
-  - If j >= the number of tiles required for the i-th order, then f(i, j, k) = f(i+1, 0, k).
-  - Otherwise, for each unused machine m that can produce a tile of the required size, compute f(i, j+machines[m], k|2^m) + (j+machines[m])*(cost of machine m).
-  - Take the minimum over all possible choices of m.
-- The answer is f(1, 0, 0).
+4.Option to save current configuration
 
-## Contributing
+5.Option to load saved configuration
+
+5.Solve the problem
+
+6.Option to download results.
+
+## License
+
+Distributed under the MIT License.
 
