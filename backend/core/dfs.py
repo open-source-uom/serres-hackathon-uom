@@ -3,6 +3,7 @@ import copy
 from shape import Shape
 from canvas import Canvas
 import networkx as nx
+import time
 class Dfs():
     def __init__(self, shapes: List[Shape], holes: List[Tuple[int, int]], dimensions: Tuple[int, int]):
         self.shapes: List[Shape] = shapes
@@ -11,6 +12,8 @@ class Dfs():
         self.tree: nx.Graph = nx.Graph()
 
 class NodeT():
+
+
 
     rotations_dict = {
         "F": [0, 1, 2, 3, 4, 5],
@@ -34,12 +37,14 @@ class NodeT():
         self.rotation_allows = rotation_allows
         self.children = []
 
+        self.children: List[NodeT] = []
+        self.childrens_placed_shapes: List[List[Any]] = []
+
     def get_canvas(self):
         return self.canvas
 
     def generate_children(self) -> Tuple[Shape, Tuple[int, int]]:
-        children: List[NodeT] = []
-        childres_placed_shapes = []
+
         for shape_symbol in self.shapes_remain:
             symbols_remain_instanse = copy.deepcopy(self.shapes_remain)
             symbols_remain_instanse.remove(shape_symbol)
@@ -57,10 +62,16 @@ class NodeT():
                     shape.rotate_shape(rotation)
                     newCanvas = copy.deepcopy(self.get_canvas())
                     newCanvas.place_shape(shape, position)
+                    for c in self.childrens_placed_shapes:
+                        if c == newCanvas.get_placed_shapes():
+                            continue
+
+
                     node_instance = NodeT(symbols_remain_instanse, newCanvas, self.rotation_allows)
-                    children.append(node_instance)
-                    childres_placed_shapes.append(node_instance.get_canvas().get_placed_shapes())
-        return children
+                    self.children.append(node_instance)
+                    #print(node_instance.get_canvas().get_placed_shapes(), shape_symbol)
+                    self.childrens_placed_shapes.append(node_instance.get_canvas().get_placed_shapes())
+        return self.children
 
 
 
@@ -82,6 +93,14 @@ def dfs(symbols: List[str], canvas: Canvas, rotation_allows: bool = True):
                 frontier.append(i)
     return leafs
 
+def measure_time(func: Callable[..., Any], *args: Tuple[Any], **kwargs: Any) -> Any:
+    start_time = time.time()
+    result = func(*args, **kwargs)
+    end_time = time.time()
+    running_time = end_time - start_time
+    #print(f"Function {func.__name__} took {running_time:.6f} seconds to run.")
+    return result, running_time
+
 def run():
     # x, y = 15, 15
     #letters = [("F", 3), ("I", 5), ("L", 4), ("N", 4), ("P", 3), ("T", 3), ("U", 2), ("V", 3), ("W", 3), ("X", 3), ("Y", 4), ("Z", 3)]
@@ -97,10 +116,12 @@ def run():
     #     else:
     #         for i in children:
     #             frontier.append(i)
-    leafs = dfs(["T", "F", "I", "Y", "L"], Canvas(5, 5, []))
+    #leafs = dfs(["T", "F", "I", "Y", "L"], Canvas(5, 5, []))
+    leafs, time = measure_time(dfs, ["T", "F", "I", "Y", "L"], Canvas(5, 5, []))
     for i in leafs:
         if i.shapes_remain == []:
             print(i.canvas.get_matrix(), "\n")
+    print(time)
 
 
 run()

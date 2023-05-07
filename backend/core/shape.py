@@ -44,6 +44,10 @@ class Shape():
         self.rotation_state:int = 0
         pass
 
+    def __eq__(self, other):
+        if not isinstance(other, Shape): return False
+        return self.value == other.value and self.origin == other.origin and self.rotation_state == other.rotation_state
+
     # mporei na einai kai degrees tha doume
     def rotate_basic_shape(self, cords, rotation:int):
         rotated_matrix = []
