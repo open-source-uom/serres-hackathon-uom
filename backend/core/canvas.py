@@ -28,7 +28,6 @@ class Canvas():
         s.change_cords_by_a_position(position)
         for coords in s.get_coords_list():
             x,y = coords
-            print(x,y)
             if(x, y) in self.holes:
                 return False
         # return check
@@ -157,7 +156,7 @@ class Canvas():
 
         for i in range(self.dimensions[1]):
             for j in range(max_x):
-                print(self.dimensions[0]-j-1,i)
+                #print(self.dimensions[0]-j-1,i)
                 positions.append((self.dimensions[0]-j-1,i))
             for j in range(-min_x):
                 positions.append((j,i))

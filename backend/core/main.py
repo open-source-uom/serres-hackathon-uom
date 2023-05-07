@@ -1,15 +1,18 @@
 from canvas import Canvas
 from node import Node
 from shape import Shape
+import copy
 def main():
                     #  Y X
-    my_canvas = Canvas(2,2, [(0,0)])
+    my_canvas = Canvas(4,4, [])
 
-    s1 = Shape('S')
-    s2 = Shape('S')
-    my_canvas.place_shape(s1,(1,1))
-    print(my_canvas.get_matrix())
-    print(my_canvas.get_all_available_positions(s2))
+    s1 = Shape('W')
+    for i in my_canvas.get_all_available_positions(s1):
+        print(i)
+        s1 = Shape('W')
+        c = copy.deepcopy(my_canvas)
+        c.place_shape(s1,i)
+        print(c.get_matrix())
     #print(my_canvas.count_filled_cells())
     #print(my_canvas.get_all_available_positions())
 

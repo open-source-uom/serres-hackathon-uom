@@ -34,7 +34,7 @@ class Shape():
                             "X": np.array([(0, 0), (1, 0), (-1, 0), (0, 1), (0, -1)]),
                             "Y": np.array([(0, 0), (-1, 0), (0, -1), (0, 1), (0, 2)]),
                             "Z": np.array([(0, 0), (0, -1), (-1, -1), [0, 1], (1, 1)]),
-                            "S": np.array([(0, 0)])
+                            "L": np.array([(0, 0), (0, -1), (0, -2), (0, 1), (1, 1)]),
     }
     def __init__(self,letter:str):
         if letter not in self.shape_to_coords_dict: raise ValueError
