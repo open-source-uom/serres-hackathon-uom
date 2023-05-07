@@ -136,10 +136,8 @@ def run(let: List[str], li: int, col: int, hol:List[str] , rot_all: bool = True)
     leafs = dfs(letters, Canvas(lines, columns, holes), rotation_allows)
     solutions = []
     for i in leafs:
-        if i.shapes_remain == []:
-            print(i.canvas.get_matrix(), "\n")
-            if i.canvas.count_empty_cells() == 0:
-                solutions.append(i.canvas.get_string_of_matrix())
+        if i.canvas.count_empty_cells() == 0:
+            solutions.append(i.canvas.get_string_of_matrix())
 
     return list(set(solutions))
 
