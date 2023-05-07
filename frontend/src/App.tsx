@@ -8,7 +8,7 @@ import BlankCanvas from './components/BlankCanvas'
 import ChooseLetters from './components/ChooseLetters'
 import ShowSelectedLetters from './components/ShowSelectedLetters'
 import SaveConfiguration from './components/SaveConfiguration.jsx'
-import DownloadSolution from './components/DownloadSolution'
+import DownloadSolutions from './components/DownloadSolutions'
 import LoadConfiguration from './components/LoadConfiguration'
 
 type CellData = {
@@ -31,6 +31,7 @@ function App() {
   const [multipleResults, setResults] = useState<CellData[][]>([])
   const [time, setTime] = useState<string>("")
   const [isRotated, setIsRotated] = useState<boolean>(false)
+  const [downloadSolutions, setDownloadSolutions] = useState<string[]>([])
   const handleCellClick = (index: number) => {
     console.log("cell clicked", index)
     if (holes.includes(index)) {
@@ -67,8 +68,8 @@ function App() {
       holes_coordinates.push([x_values[i], y_values[i]])
     }
 
-
-    console.log("holes_coordinates", holes_coordinates)
+    let total_result: any[] = []
+    //console.log("holes_coordinates", holes_coordinates)
     const data = {
       rows: rows,
       columns: columns,
@@ -77,35 +78,60 @@ function App() {
       isRotated: isRotated
     }
     console.log("data", data)
-    const response = await fetch(`http://localhost:${api_port}/${api_route}`, {
+    const response = fetch(`http://localhost:${api_port}/${api_route}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify(data),
+    }).then((response) => {
+      return response.json()
+    }).then((res: any) => {
+      console.log(res)
+      const time = res.time as string;
+      const solutions = res.solutions as string[];
+      total_result = solutions.map((solution: string) => {
+        return Array.from(solution.replace(/ /g, "")).map((letter, index) => {
+          return {
+            size: pixels,
+            bgcolor: "red",
+            isRemovedForHole: false,
+            index: index,
+            letter: letter
+          }
+
+
+        })
+      })
+      setDownloadSolutions(solutions)
+      setResults(total_result)
+      setTime(time)
+    }).catch((err: any) => {
+      console.log(err)
     })
 
 
 
-    console.log("response", response)
-    const result = await response.json()
-    console.log(result)
-    const solution = result.solution as string;
-    const total_result = Array.from(solution.replace(/ /g, "")).map((letter, index) => {
-      return {
-        size: pixels,
-        bgcolor: "red",
-        isRemovedForHole: false,
-        index: index,
-        letter: letter
-      }
-    })
 
-    console.log("TOTAL RESULT IS", total_result)
-    // setResult(total_result)
-    setResults([total_result, total_result])
-    setTime(result.time)
+    // console.log("response", response)
+    // // const result = await response.json()
+    // console.log(result)
+    // const solution = result.solution as string;
+    // const total_result = Array.from(solution.replace(/ /g, "")).map((letter, index) => {
+    //   return {
+    //     size: pixels,
+    //     bgcolor: "red",
+    //     isRemovedForHole: false,
+    //     index: index,
+    //     letter: letter
+    //   }
+    // })
+
+    // console.log("TOTAL RESULT IS", total_result)
+    setResult(total_result)
+
+    // setTime(result.time)
     // update state with response
 
     // console.log("data", data)
@@ -147,7 +173,7 @@ function App() {
       })}
       <DisplaySolution cellsData={result} columns={columns} rows={rows} />
       <br />
-      <DownloadSolution results={result} />
+      <DownloadSolutions results={downloadSolutions} />
       <br />
     </div>
   )

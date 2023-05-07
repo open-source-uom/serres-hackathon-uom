@@ -32,7 +32,7 @@ function Canvas({ cellsData, handleCellClick, rows, columns }: { cellsData: Cell
             <div style={style}>
 
                 {cellsData.map((cellData) => {
-                    console.log(cellData)
+
                     return <span><Cell holeColor='black' size={cellData.size} key={cellData.letter + "1"} bgcolor={cellData.bgcolor} isRemovedForHole={cellData.isRemovedForHole} index={cellData.index} letter={cellData.letter} handleCellClick={(e) => console.log("nothing")
                     } /></span>
                 })}
@@ -64,7 +64,6 @@ export function Cell({ size = 20, bgcolor = "white", isRemovedForHole, holeColor
     let the_index = -1;
     for (let i = 0; i < supportedLetters.length; i++) {
         if (letter === supportedLetters[i]) {
-            console.log("letter is: ", letter, "and color is: ", letterColors[i])
             the_index = i;
             break;
         }

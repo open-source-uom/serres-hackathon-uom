@@ -19,11 +19,9 @@ function ChooseLetters({ letterList, setLetterList }: { letterList: string[], se
     ]
 
     const handleLetterClick = (letter: string) => {
-        console.log(letter)
         setLetterList(prev => [...prev, letter])
     }
 
-    console.log(letterList)
 
 
     return (
