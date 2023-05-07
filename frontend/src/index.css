@@ -3,10 +3,9 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark;
+  color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  justify-content: center;
-  align-items: center;
+  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -25,13 +24,13 @@ a:hover {
 }
 
 body {
-  
+ 
 	width: 100%;
   background: #47232f;
   /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #252525, #346688);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #252525, #21333f);
+  background: linear-gradient(to right, #857171, #404286);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
    display: flex;
   justify-content: center;
@@ -43,24 +42,35 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  color: black;
-  font-weight: 700;
-  width: 100px;
-  height: 70px;
-  border: none;
-  background: rgb(214, 214, 214);
-  box-shadow: 0 0 10px #928f8f, 0 0 40px #273a8d, 0 0 80px #081557;
 
-  font-size: 15px;
-  margin-left: 5px;
-  outline: none;
-  font-family: Arial, Helvetica, sans-serif;
-  border-radius: 20%;
-  
+button {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
-button:active {
-  box-shadow: 1px 1px 2px #fd0c99, 1px 1px 2px #ff00dd;
+button-54:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+button:hover {
+  border-color: #e8e8e8;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
@@ -71,8 +81,9 @@ button:active {
   a:hover {
     color: #747bff;
   }
-  button {
-    background-color: #f9f9f9;
-  }
   
+  .button-54 {
+    padding: 0.25em 0.75em;
+  }
 }
+
