@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
+import sys
 # from .. import api
 import sys
 import time
@@ -11,6 +12,14 @@ from typing import Callable, Any, Tuple
 sys.path.append("/backend/core")
 # import canvas
 app = FastAPI()
+
+def measure_time(func: Callable[..., Any], *args: Tuple[Any], **kwargs: Any) -> Any:
+    start_time = time.time()
+    result = func(*args, **kwargs)
+    end_time = time.time()
+    running_time = end_time - start_time
+    #print(f"Function {func.__name__} took {running_time:.6f} seconds to run.")
+    return result, running_time
 
 saved_data = None
 # define CORS policy
@@ -61,7 +70,9 @@ async def start_solution(request: Request):
     print(lines, holes, columns, is_rotated,letters)
     # UNCOMMENT AUTO EDW
     # TA HOLES THELOUN ME MOD KAI DIV NA GINOUN X,Y
-    string_arr,runtime = measure_time(run, letters, lines, columns, holes), rotation_allows=is_rotated)
+    start_time = time.time()
+    string_arr,runtime = run(letters, lines, columns, holes, is_rotated)
+    end_time = time.time()
     # COMMENT AUTA EDW
     # string_solution = "FFLLI YFFLI YFTLI YFTLI YTTTI"
     # string_arr = [string_solution]

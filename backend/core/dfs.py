@@ -44,33 +44,35 @@ class NodeT():
         return self.canvas
 
     def generate_children(self) -> Tuple[Shape, Tuple[int, int]]:
-
-        for shape_symbol in self.shapes_remain:
-            symbols_remain_instanse = copy.deepcopy(self.shapes_remain)
-            symbols_remain_instanse.remove(shape_symbol)
-            rotations = copy.deepcopy(self.rotations_dict[shape_symbol])
-            rot_made = []
-            for rotation in range(6):
-                if rotations[rotation] in rot_made:
-                    continue
-                rot_made.append(rotation)
-                shape = Shape(shape_symbol)
-                shape.rotate_shape(rotation)
-                #print(self.canvas.get_all_available_positions(shape))
-                for position in self.canvas.get_all_available_positions(shape):
+        if self.rotation_allows==True:
+            for shape_symbol in self.shapes_remain:
+                symbols_remain_instanse = copy.deepcopy(self.shapes_remain)
+                symbols_remain_instanse.remove(shape_symbol)
+                rotations = copy.deepcopy(self.rotations_dict[shape_symbol])
+                rot_made = []
+                for rotation in range(6):
+                    if rotations[rotation] in rot_made:
+                        continue
+                    rot_made.append(rotation)
                     shape = Shape(shape_symbol)
                     shape.rotate_shape(rotation)
+                    #print(self.canvas.get_all_available_positions(shape))
+                    for position in self.canvas.get_all_available_positions(shape):
+                        shape = Shape(shape_symbol)
+                        shape.rotate_shape(rotation)
+                        newCanvas = copy.deepcopy(self.get_canvas())
+                        newCanvas.place_shape(shape, position)
+        else:
+            for shape_symbol in self.shapes_remain:
+                symbols_remain_instanse = copy.deepcopy(self.shapes_remain)
+                symbols_remain_instanse.remove(shape_symbol)
+                shape = Shape(shape_symbol)
+                for position in self.canvas.get_all_available_positions(shape):
+                    shape = Shape(shape_symbol)
                     newCanvas = copy.deepcopy(self.get_canvas())
                     newCanvas.place_shape(shape, position)
-                    for c in self.childrens_placed_shapes:
-                        if c == newCanvas.get_placed_shapes():
-                            continue
-
-
                     node_instance = NodeT(symbols_remain_instanse, newCanvas, self.rotation_allows)
                     self.children.append(node_instance)
-                    #print(node_instance.get_canvas().get_placed_shapes(), shape_symbol)
-                    self.childrens_placed_shapes.append(node_instance.get_canvas().get_placed_shapes())
         return self.children
 
 
@@ -125,12 +127,6 @@ def run(let: List[str], li: int, col: int, hol:List[str] , rot_all: bool = True)
     # y_values = holes.map((hole) = > Math.floor(hole / columns))
     for hole in hol:
         holes.append((int(hole) % col, int(hole) // col))
-
-
-
-
-
-
 
     letters = let
     lines = li

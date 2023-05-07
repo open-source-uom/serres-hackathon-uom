@@ -61,8 +61,7 @@ class Canvas():
     def place_shape_unchecked(self,s:Shape,position:Tuple[int,int]):
         s.change_cords_by_a_position(position)
         print("Warning unchecked placement")
-    def find_perimeter_os_shapes(self, shapes:List[Shape])->int:
-        G:nx.Graph = nx.Graph()
+
 
 
     def place_shape(self,s:Shape,position:Tuple[int,int]):
@@ -188,55 +187,31 @@ class Canvas():
     # Calculate Parameter of shape
     def get_placed_shapes(self):
         return self.shapes_placed
-    def calculate_parameter_of_shape(self,s1:Shape) -> int:
+    def calculate_parimeter_of_shapes(self,shapes: List[Shape]) -> int:
 
-        total_sum = 0
-        all_coords = self.get_all_shapes_coords().remove(s1.get_coords_list())
-        for node in s1.nodes:
-            this_sum = 0
-            x,y = node.get_coords()
+        # Create a 3x3 cube shape
+        shape = []
+        for i in shapes:
+            shape += i.get_coords_list()
 
-            if x == 0:
-                this_sum +=1
-            if x == self.dimensions[0] - 1:
-                this_sum +=1
-            if y == 0:
-                this_sum +=1
-            if y == self.dimensions[1] - 1:
-                this_sum +=1
+        # Create a graph
+        G = nx.Graph()
 
+        # add each poit of the shape to the graph
+        for i in shape:
+            G.add_node(i)
+        # add edges between tow points if they are neighbors
+        for i in shape:
+            for j in shape:
+                if (i[0] == j[0] and abs(i[1] - j[1]) == 1) or (i[1] == j[1] and abs(i[0] - j[0]) == 1):
+                    G.add_edge(i, j)
 
-
-            this_sum += 4 - this_sum
-
-            # check if it clashes with any of its own cells
-            for node2 in s1.nodes:
-                if node2.get_coords() == (x - 1, y):
-                    this_sum -= 1
-                if node2.get_coords() == (x + 1, y):
-                    this_sum -= 1
-                if node2.get_coords() == (x, y - 1):
-                    this_sum -= 1
-                if node2.get_coords() == (x, y + 1):
-                    this_sum -= 1
-
-
-
-            if all_coords is None:
-                total_sum += this_sum
-                continue
-            for others_coords in all_coords:
-                if others_coords == (x - 1, y):
-                    this_sum -= 1
-                if others_coords == (x + 1, y):
-                    this_sum -= 1
-                if others_coords == (x, y - 1):
-                    this_sum -= 1
-                if others_coords == (x, y + 1):
-                    this_sum -= 1
-
-            total_sum += this_sum
-        return total_sum
+        # show the graph
+        # print the number neighbors of each point
+        s = 0
+        for i in shape:
+            s += 4 - len(list(G.neighbors(i)))
+        return s
     def get_empty_cells(self)->List[Tuple[int,int]]:
         pass
 
