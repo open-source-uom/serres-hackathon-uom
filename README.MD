@@ -42,10 +42,7 @@ npm run dev
 To use the Tile Factory 1981 Problem Solver,
 simply use the Graphical User Interface(GUI) that will lunch on local host with the previous commands.
 
-## Contributing
-
-
-##License
+## License
 
 Distributed under the MIT License.
 
