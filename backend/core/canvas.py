@@ -11,7 +11,6 @@ class Canvas():
     empty_cell_char = '-'
     hole_cell_char = 'B'
 
-    # to megethos den mas apasxolei sto backend
     def __init__(self,lines:int,rows:int, holes:List[Tuple[int, int]]):#y:lines,x:rows
         self.dimensions: Tuple[int, int] = (lines, rows)
         self.shapes_placed:List[Shape] = []

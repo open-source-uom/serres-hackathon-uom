@@ -1,7 +1,17 @@
 from canvas import Canvas
 from node import Node
 from shape import Shape
+from typing import Tuple, List, Callable, Any
+import time
 import copy
+
+def measure_time(func: Callable[..., Any], *args: Tuple[Any], **kwargs: Any) -> Tuple[ any, float]:
+    start_time = time.time()
+    result = func(*args, **kwargs)
+    end_time = time.time()
+    running_time = end_time - start_time
+    return result, running_time
+
 def main():
                     #  Y X
     my_canvas = Canvas(3,3, [])
@@ -16,7 +26,8 @@ def main():
     # print(my_canvas.get_all_non_available_positions(s1))
     # my_canvas.place_shape(s1,(1,0))
     # print(my_canvas.get_matrix())
-
+    res, time = measure_time(my_canvas.get_all_available_positions, s1)
+    print(time)
     # # man = manipullator()
     # # result1 = my_canvas.count_filled_cells()
     # # #print("Filled Cells" ,result1)
@@ -33,7 +44,7 @@ def main():
     # #man.rotate_shape(s1,0)
     # #print cords of s1
     # #print(s1.get_coords_list())
-    pos1 = (6,6)
+    #pos1 = (6,6)
     # pos2 = (2,2)
     # #Shape.change_cords_by_a_position(s1,pos)
     # #print(s1.get_coords_list())
