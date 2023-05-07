@@ -1,7 +1,7 @@
 from typing import List, Tuple, Callable, Any
 import copy
-from shape import Shape
-from canvas import Canvas
+from backend_core.shape import Shape
+from backend_core.canvas import Canvas
 import networkx as nx
 import time
 class Dfs():
