@@ -1,7 +1,7 @@
 from typing import List, Tuple, Callable, Any
 import copy
-from backend_core.shape import Shape
-from backend_core.canvas import Canvas
+from shape import Shape
+from canvas import Canvas
 import networkx as nx
 import time
 class Dfs():
@@ -141,4 +141,4 @@ def run(let: List[str], li: int, col: int, hol:List[str] , rot_all: bool = True)
 
     return list(set(solutions))
 
-#print(run(["T", "F", "I"], 5, 5, ["0", "6"], True))
+print(run(["T", "F", "I"], 5, 5, ["0", "6"], True))

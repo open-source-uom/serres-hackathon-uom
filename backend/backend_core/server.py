@@ -6,10 +6,9 @@ import time
 
 import os
 import sys
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-sys.path.insert(0, parent_dir)
 
-from backend_core.dfs import run
+
+from dfs import run
 
 
 from typing import Callable, Any, Tuple

@@ -3,7 +3,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from typing import List, Tuple, Callable, Any
 #from canvas import Canvas
-from backend_core.node import Node
+from node import Node
 
 class Shape():
 
