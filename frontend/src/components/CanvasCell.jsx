@@ -42,7 +42,7 @@ function CanvasCell({letter,color,index}) {
   const style = {
         width: pixels,
         height: pixels,
-        border: '1px solid black',
+        border: '1px white solid',
         borderRight: `3px solid ${getColorOfLetter(letter)}`,
         backgroundColor:`${isRemovedForHole ? "black" : color}`
     };

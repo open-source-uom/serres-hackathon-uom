@@ -46,7 +46,7 @@ h1 {
 button {
   color: black;
   font-weight: 700;
-  width: 100px;
+  width: 110px;
   height: 70px;
   border: none;
   background: rgb(214, 214, 214);
@@ -60,7 +60,7 @@ button {
   
 }
 button:active {
-  box-shadow: 1px 1px 2px #fd0c99, 1px 1px 2px #ff00dd;
+  box-shadow: 1px 1px 2px #7d61d7, 1px 1px 2px #3929e968;
 }
 
 @media (prefers-color-scheme: light) {

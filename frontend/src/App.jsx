@@ -117,11 +117,11 @@ const App = () => {
     }
 
     return (
-        <div width="100vw" >
+        <div width="100vw">
             <h1>Canvas Solver App</h1>
             <div>
                 <InputDimensions />
-                <div style={{width:"600px",height:"2px",backgroundColor:"green",margin:"1rem"}}></div>
+                <div style={{width:"680px",height:"3px",backgroundColor:"white",margin:"1rem"}}></div>
                 {/* <Cell value={cells} onChange={setCells} /> */}
                 {}
                 <Canvas
