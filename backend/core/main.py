@@ -16,9 +16,10 @@ def main():
                     #  Y X
     my_canvas = Canvas(3,3, [])
 
-    s1 = Shape('W')
+    s1 = Shape('T')
     my_canvas.place_shape(s1,(1,1))
-    print(my_canvas.get_sring_of_matrix())
+    # print(my_canvas.get_sring_of_matrix())
+    print(my_canvas.calculate_parameter_of_shape(s1))
     #print(my_canvas.count_filled_cells())
     #print(my_canvas.get_all_available_positions())
 
