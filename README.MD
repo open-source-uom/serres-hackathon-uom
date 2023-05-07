@@ -47,6 +47,20 @@ npm run dev
 To use the Tile Factory 1981 Problem Solver,
 simply use the Graphical User Interface(GUI) that will lunch on local host with the previous commands.
 
+1.Select number of rows, columns and pixels(grid/array)
+
+2.Select holes(black) if any.
+
+3.Choose letters(can choose rotated letters)
+
+4.Option to save current configuration
+
+5.Option to load saved configuration
+
+5.Solve the problem
+
+6.Option to download results.
+
 ## License
 
 Distributed under the MIT License.
