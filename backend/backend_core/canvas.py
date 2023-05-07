@@ -2,7 +2,7 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 from typing import List, Tuple, Callable, Any
-from shape import Shape
+from backend_core.shape import Shape
 
 
 
