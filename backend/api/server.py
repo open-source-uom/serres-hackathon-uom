@@ -71,7 +71,7 @@ async def start_solution(request: Request):
     end_time = time.time()
     print("RUNTIME",end_time-start_time)
     runtime = end_time-start_time
-    return {"message": "POST request succeeded","solutions": string_arr,"time":15.0,"solution":string_arr}
+    return {"message": "POST request succeeded","solutions": string_arr,"time":runtime,"solution":string_arr}
 
 
 @app.get("/get_saved_data")
