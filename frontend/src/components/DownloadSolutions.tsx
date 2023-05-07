@@ -1,8 +1,10 @@
+import { CellData } from "./Canvas";
 
-const DownloadSolution = ({ results }: { results: any }) => {
+const DownloadSolution = ({ results }: { results: string[] }) => {
 
     const handleDownload = () => {
         const element = document.createElement("a");
+
         const file = new Blob([JSON.stringify(results)], { type: 'application/json' });
         element.href = URL.createObjectURL(file);
         element.download = "results.json";

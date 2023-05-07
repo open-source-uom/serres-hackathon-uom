@@ -1,7 +1,7 @@
 from typing import List, Tuple, Callable, Any
 import copy
-from shape import Shape
-from canvas import Canvas
+from backend_core.shape import Shape
+from backend_core.canvas import Canvas
 import networkx as nx
 import time
 class Dfs():
@@ -101,7 +101,7 @@ def measure_time(func: Callable[..., Any], *args: Tuple[Any], **kwargs: Any) -> 
     #print(f"Function {func.__name__} took {running_time:.6f} seconds to run.")
     return result, running_time
 
-def run():
+def run(let: List[str], li: int, col: int, hol:List[str] , rot_all: bool = True):
     # x, y = 15, 15
     #letters = [("F", 3), ("I", 5), ("L", 4), ("N", 4), ("P", 3), ("T", 3), ("U", 2), ("V", 3), ("W", 3), ("X", 3), ("Y", 4), ("Z", 3)]
     # root = NodeT(["T", "F", "I", "Y", "L"], Canvas(5, 5, []))
@@ -117,11 +117,34 @@ def run():
     #         for i in children:
     #             frontier.append(i)
     #leafs = dfs(["T", "F", "I", "Y", "L"], Canvas(5, 5, []))
-    leafs, time = measure_time(dfs, ["T", "F", "I", "Y", "L"], Canvas(5, 5, []))
+
+    holes = []
+    # const
+    # x_values = holes.map((hole) = > hole % columns)
+    # const
+    # y_values = holes.map((hole) = > Math.floor(hole / columns))
+    for hole in hol:
+        holes.append((int(hole) % col, int(hole) // col))
+
+
+
+
+
+
+
+    letters = let
+    lines = li
+    columns = col
+
+    rotation_allows = rot_all
+    leafs = dfs(letters, Canvas(lines, columns, holes), rotation_allows)
+    solutions = []
     for i in leafs:
         if i.shapes_remain == []:
             print(i.canvas.get_matrix(), "\n")
-    print(time)
+            if i.canvas.count_empty_cells() == 0:
+                solutions.append(i.canvas.get_string_of_matrix())
 
+    return list(set(solutions))
 
-run()
+#print(run(["T", "F", "I"], 5, 5, ["0", "6"], True))

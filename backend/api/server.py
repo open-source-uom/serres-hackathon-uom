@@ -2,13 +2,20 @@ from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
-# from .. import api
-import sys
 import time
+
+import os
+import sys
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, parent_dir)
+
+from backend_core.dfs import run
+
 
 from typing import Callable, Any, Tuple
 
-sys.path.append("/backend/core")
+
+sys.path.append("/backend/backend_core/dfs")
 # import canvas
 app = FastAPI()
 
@@ -59,16 +66,12 @@ async def start_solution(request: Request):
     letters = body["letterList"]
     is_rotated = body["isRotated"]
     print(lines, holes, columns, is_rotated,letters)
-    # UNCOMMENT AUTO EDW
-    # TA HOLES THELOUN ME MOD KAI DIV NA GINOUN X,Y
-    # string_arr,runtime = measure_time(run, letters, canvas.__init__(lines, columns, holes), rotation_allows=is_rotated)
-    # COMMENT AUTA EDW
-    string_solution = "FFLLI YFFLI YFTLI YFTLI YTTTI"
-    string_arr = [string_solution]
-    # EDW PAEI STO SOLUTIONS TA POLLA STO SOLUTION TO MONO(TO SOLUTION DEN EINAI ANAGKAIO ISA ISA TO EKANA COMMENT OUT APO
-    # TO FRONTEND)
-    # STO FRONTEND EXW KANEI DUPLICATE GIA NA MPOROYME NA VLEPOUME POLLAPLA THA XREIASTEI NA AFAIRETHEI KATI
-    return {"message": "POST request succeeded","solutions": string_arr,"time":15.0,"solution":string_solution}
+    start_time  = time.time()
+    string_arr = run(letters, lines, columns, holes, is_rotated)
+    end_time = time.time()
+    print("RUNTIME",end_time-start_time)
+    runtime = end_time-start_time
+    return {"message": "POST request succeeded","solutions": string_arr,"time":15.0,"solution":string_arr}
 
 
 @app.get("/get_saved_data")
