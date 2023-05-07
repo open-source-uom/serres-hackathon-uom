@@ -61,6 +61,13 @@ simply use the Graphical User Interface(GUI) that will lunch on local host with 
 
 6.Option to download results.
 
+## Contributors
+
+@GeorgeApos
+@nGeorgit
+@anEleftheriadis
+@GeorgeFkd
+
 ## License
 
 Distributed under the MIT License.
