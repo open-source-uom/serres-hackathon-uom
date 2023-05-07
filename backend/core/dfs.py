@@ -1,4 +1,7 @@
+from typing import List, Tuple, Callable, Any
+import copy
 from shape import Shape
+from canvas import Canvas
 import networkx as nx
 class Dfs():
     def __init__(self, shapes: List[Shape], holes: List[Tuple[int, int]], dimensions: Tuple[int, int]):
@@ -7,49 +10,35 @@ class Dfs():
         self.dimensions: Tuple[int, int] = dimensions
         self.tree: nx.Graph = nx.Graph()
 
-class Node:
+class NodeT():
     shapes_that_must_be_used = ["W", "T", "Y", "U", "P", "F", "L", "Z", "X", "V", "N"]
 
-    def init(self, parent, canvas):
+    def __init__(self, shapes_remain: List[ Shape], canvas, rotation_allows: bool = True):
         # List[Node]
-
-        self.parent = parent
-        if (parent == None):
-            self.canvas = canvas
-        else:
-            self.canvas = parent.canvas
-
+        self.shapes_remain = shapes_remain
+        self.canvas = canvas
+        self.rotation_allows = rotation_allows
         self.children = []
 
     def generate_children(self) -> Tuple[Shape, Tuple[int, int]]:
-        # get random shape
-        available_shapes = copy.deepcopy(self.shapes_that_must_be_used)
-        shape_letter = random.choice(self.shapes_that_must_be_used)
-        shape = Shape(shape_letter)
+        children: List[NodeT] = []
+        for shape_symbol in self.shapes_remain:
+            symbols_remain_instanse = copy.deepcopy(self.shapes_remain)
+            symbols_remain_instanse.remove(shape_symbol)
+            for rotation in range(6):
+                shape = Shape(shape_symbol)
+                shape.rotate_shape(rotation)
+                #print(self.canvas.get_all_available_positions(shape))
+                for position in self.canvas.get_all_available_positions(shape):
+                    shape = Shape(shape_symbol)
+                    shape.rotate_shape(rotation)
+                    newCanvas = copy.deepcopy(self.canvas)
+                    newCanvas.place_shape(shape, position)
+                    children.append(NodeT(symbols_remain_instanse, newCanvas, self.rotation_allows))
+        return children
 
-        print(self.shapes_that_must_be_used)
 
-        # get random position from available ones
-        possible_coords = self.canvas.get_available_positions_for_shape(shape)
-        # selected_coords = random.choice(possible_coords)
-        # if there isn't one available i will change the shape till i find one that can fit
-        # if i cant find i gotta switch the coords i choose
-        #  return the first shape that fits somewhere
 
-        #         the available positions already considers that the shape can be placed in these
-        available_shapes.remove(shape)
-        while len(possible_coords) == 0:
-            shape_letter = random.choice(available_shapes)
-            shape = Shape(shape_letter)
-            available_shapes.remove(shape)
-            possible_coords = self.canvas.get_available_positions_for_shape(shape)
-
-        selected_coords = random.choice(possible_coords)
-        self.shapes_that_must_be_used.remove(shape)
-
-        return shape, selected_coords
-
-        pass
 
 
 def is_solution(current):
@@ -57,15 +46,25 @@ def is_solution(current):
 
 def run():
     x, y = 15, 15
-    root = Node(None, Canvas(15, 15, []))
+    root = NodeT(["T", "F", "I", "Y", "L"], Canvas(5, 5, []))
     frontier = [root]
-    solutions = []
+    leafs = []
     while len(frontier) > 0:
         current = frontier.pop()
-        if(is_solution(current)):
-             solutions.append(current)
-        shape_to_place,position = current.generate_children()
-        current.canvas.place_shape_checked(shape_to_place,position)
-        frontier.push(Node(current))
-    pass
+
+        children = current.generate_children()
+        if len(children) == 0:
+            leafs.append(current)
+        else:
+            for i in children:
+                frontier.append(i)
+
+    for i in leafs:
+        if i.shapes_remain == []:
+            print(i.canvas.get_matrix(), "\n")
+    # node = NodeT(["T", "X"], Canvas(4, 4, []), True)
+    # children = node.generate_children()
+    # for c in children:
+    #     print(c.canvas.get_matrix(), "\n")
+
 run()
