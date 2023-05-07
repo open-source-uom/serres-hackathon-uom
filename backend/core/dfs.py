@@ -1,14 +1,16 @@
-import copy
-import random
-from typing import List, Tuple
-
-from tiling import Shape, Canvas
-
+from shape import Shape
+import networkx as nx
+class Dfs():
+    def __init__(self, shapes: List[Shape], holes: List[Tuple[int, int]], dimensions: Tuple[int, int]):
+        self.shapes: List[Shape] = shapes
+        self.holes: List[Tuple[int, int]] = holes
+        self.dimensions: Tuple[int, int] = dimensions
+        self.tree: nx.Graph = nx.Graph()
 
 class Node:
     shapes_that_must_be_used = ["W", "T", "Y", "U", "P", "F", "L", "Z", "X", "V", "N"]
 
-    def __init__(self, parent, canvas):
+    def init(self, parent, canvas):
         # List[Node]
 
         self.parent = parent
@@ -50,16 +52,20 @@ class Node:
         pass
 
 
+def is_solution(current):
+    pass
+
 def run():
     x, y = 15, 15
-    root = Node(None, Canvas(15, 15))
+    root = Node(None, Canvas(15, 15, []))
     frontier = [root]
+    solutions = []
     while len(frontier) > 0:
         current = frontier.pop()
+        if(is_solution(current)):
+             solutions.append(current)
         shape_to_place,position = current.generate_children()
         current.canvas.place_shape_checked(shape_to_place,position)
         frontier.push(Node(current))
     pass
-
-
 run()
