@@ -61,10 +61,10 @@ async def start_solution(request: Request):
     print(lines, holes, columns, is_rotated,letters)
     # UNCOMMENT AUTO EDW
     # TA HOLES THELOUN ME MOD KAI DIV NA GINOUN X,Y
-    # string_arr,runtime = measure_time(run, letters, canvas.__init__(lines, columns, holes), rotation_allows=is_rotated)
+    string_arr,runtime = measure_time(run, letters, lines, columns, holes), rotation_allows=is_rotated)
     # COMMENT AUTA EDW
-    string_solution = "FFLLI YFFLI YFTLI YFTLI YTTTI"
-    string_arr = [string_solution]
+    # string_solution = "FFLLI YFFLI YFTLI YFTLI YTTTI"
+    # string_arr = [string_solution]
     # EDW PAEI STO SOLUTIONS TA POLLA STO SOLUTION TO MONO(TO SOLUTION DEN EINAI ANAGKAIO ISA ISA TO EKANA COMMENT OUT APO
     # TO FRONTEND)
     # STO FRONTEND EXW KANEI DUPLICATE GIA NA MPOROYME NA VLEPOUME POLLAPLA THA XREIASTEI NA AFAIRETHEI KATI
