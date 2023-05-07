@@ -32,35 +32,17 @@ Your team has only 42 hours to solve all the tasks is asked for! If you solve al
 To install the Tile Factory 1981 Problem Solver, simply clone the repository and install the required dependencies:
 
 ```
-git clone https://github.com/your-username/tile-factory-1981.git
-cd tile-factory-1981
-pip install -r requirements.txt
+git clone [https://github.com/your-username/tile-factory-1981.git](https://github.com/Open-Source-UoM/serres-hackathon-uom)
+cd serres-hackathon-uom
+npm install
+npm run dev
 ```
 
 ## Usage
 
-To use the Tile Factory 1981 Problem Solver, simply run the `solve.py` script with the input file as a parameter:
+To use the Tile Factory 1981 Problem Solver,
+simply use the Graphical User Interface(GUI) that will lunch on local host with the previous commands.
 
-```
-python solve.py input.txt
-```
-
-The input file should be formatted as follows:
-
-- The first line should contain the number of machines, the number of tile sizes, and the number of orders, separated by spaces.
-- The second line should contain the capacities of the machines, separated by spaces.
-- The third line should contain the sizes of the tiles, separated by spaces.
-- The remaining lines should contain the orders, one per line, with the number of tiles of each size required for the order, separated by spaces.
-
-For example, the following input file specifies a problem with 3 machines, 2 tile sizes, and 2 orders:
-
-```
-3 2 2
-10 5 8
-2 3
-5 1
-1 2
-2 1
 ```
 
 ## Algorithm
