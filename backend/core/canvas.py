@@ -180,10 +180,32 @@ class Canvas():
 
         return holes
 
-    # Calculate Parameter of shape
-    def calculate_parameter_of_shape(self,s1:Shape) -> int:
-        pass
 
+    def get_all_shapes_coords(self):
+        return list(map(lambda shape: shape.get_coords_list(),self.shapes_placed))
+    # Calculate Parameter of shape
+    def get_placed_shapes(self):
+        return self.shapes_placed
+    def calculate_parameter_of_shape(self,s1:Shape) -> int:
+
+        total_sum = 0
+        all_coords = self.get_all_shapes_coords()
+        for node in s1.nodes:
+            this_sum = 0
+            x,y = node.get_coords()
+
+            for others_coords in all_coords:
+                if others_coords == (x - 1, y):
+                    this_sum += 1
+                if others_coords == (x + 1, y):
+                    this_sum += 1
+                if others_coords == (x, y - 1):
+                    this_sum += 1
+                if others_coords == (x, y + 1):
+                    this_sum += 1
+            this_sum += 4 - this_sum
+            total_sum += this_sum
+        return total_sum
     def get_empty_cells(self)->List[Tuple[int,int]]:
         pass
 
@@ -192,10 +214,21 @@ class Canvas():
         pass
 
     def shapes_touch(self,s1:Shape,s2:Shape) -> bool:
-        pass
-    def merge_shapes(self,s1:Shape,s2:Shape):
+        others_coords = s2.get_coords_list()
+        for node in s1.nodes:
+            x,y = node.get_coords()
+            if others_coords == (x - 1, y):
+                return True
+            if others_coords == (x + 1, y):
+                return True
+            if others_coords == (x, y - 1):
+                return True
+            if others_coords == (x, y + 1):
+                return True
+    def merge_shapes(self,s1:Shape,s2:Shape,new_label:str):
         # this will return a shape that has the coordinates of both
-
+        combined_coords = s1.get_coords_list() + s2.get_coords_list()
+        return Shape(new_label,combined_coords)
         # the positions of the nodes are on the canvas so we just create a new shape that has as Nodes both the nodes of s1 and s2
 
         pass
