@@ -11,7 +11,6 @@ The Tile Factory 1981 Problem Solver is a Python program that solves the Tile Fa
 - [Background](#background)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Background
@@ -32,8 +31,14 @@ To install the Tile Factory 1981 Problem Solver, simply clone the repository and
 
 ```
 git clone [https://github.com/your-username/tile-factory-1981.git](https://github.com/Open-Source-UoM/serres-hackathon-uom)
+```
+```
 cd serres-hackathon-uom
+```
+```
 npm install
+```
+```
 npm run dev
 ```
 
