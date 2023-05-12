@@ -1,17 +1,22 @@
 
-
 # Open Source UoM Serres Hackathon 2023
 
-Hackathon repo: https://github.com/serrestech/hackathon-topic
+Hackathon topic 2023: https://github.com/serrestech/hackathon-topic
 
-The Tile Factory 1981 Problem Solver is a Python program that solves the Tile Factory 1981 Problem. This problem is a classic optimization problem that involves finding the optimal way to produce tiles of different sizes using a limited set of machines.
+The "Tile Factory 1981" Problem Solver is a Python program that solves the "pentomino" problem.
+This problem is a classic optimization problem that involves finding the optimal way to produce tiles of different sizes using a limited set of machines.
+
+[![2nd Winner 2023](2nd_2023.png)](https://hackathon.serrestech.gr)
 
 ## Table of Contents
 
-- [Background](#background)
-- [Installation](#installation)
-- [Usage](#usage)
-- [License](#license)
+- [Open Source UoM Serres Hackathon 2023](#open-source-uom-serres-hackathon-2023)
+  - [Table of Contents](#table-of-contents)
+  - [Background](#background)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Contributors](#contributors)
+  - [License](#license)
 
 ## Background
 
@@ -29,37 +34,24 @@ Your team has only 42 hours to solve all the tasks is asked for! If you solve al
 
 To install the Tile Factory 1981 Problem Solver, simply clone the repository and install the required dependencies:
 
-```
-git clone [https://github.com/your-username/tile-factory-1981.git](https://github.com/Open-Source-UoM/serres-hackathon-uom)
-```
-```
+```shell
+git clone git@github.com:Open-Source-UoM/serres-hackathon-uom.git
 cd serres-hackathon-uom
-```
-```
 npm install
-```
-```
 npm run dev
 ```
 
 ## Usage
 
-To use the Tile Factory 1981 Problem Solver,
-simply use the Graphical User Interface(GUI) that will lunch on local host with the previous commands.
+To use the Tile Factory 1981 Problem Solver, simply use the Graphical User Interface(GUI) that will lunch on local host with the previous commands.
 
 1.Select number of rows, columns and pixels(grid/array)
-
 2.Select holes(black) if any.
-
 3.Choose letters(can choose rotated letters)
-
 4.Option to save current configuration
-
 5.Option to load saved configuration
-
-5.Solve the problem
-
-6.Option to download results.
+6.Solve the problem
+7.Option to download results.
 
 ## Contributors
 
@@ -70,5 +62,4 @@ simply use the Graphical User Interface(GUI) that will lunch on local host with 
 
 ## License
 
-Distributed under the MIT License.
-
+Distributed under the [MIT License](LICENSE).
